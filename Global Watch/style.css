@@ -1,0 +1,86 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab&family=Roboto:wght@100;300;400&display=swap");
+:root {
+	/* Main color palette of web page */
+	--grey: #d3d3d3;
+	--dark-green: #416633;
+	--green: #6aa653;
+	--light-green: #83cc66;
+	--background-color: #ecfffd;
+	--white: #ffff;
+
+	/* Primary color palette of visualizations */
+	--yellow: #f9ff00;
+	--light-yellow: #ffdc00;
+	--light-orange: #ffb800;
+	--orange: #ff9500;
+	--red: #ff5a00;
+
+	/* Tones of Blue  */
+	--hue: 242; /* Don´t Change */
+	--saturation: 100%; /* Don´t Change */
+	--lightness: 20%; /* Increment in intervals of 20 starting on 20*/
+}
+
+body {
+	background-color: var(--background-color);
+	height: 100vh;
+	width: 100vw;
+	margin: 0;
+	padding: 0;
+}
+
+header {
+	position: relative;
+	display: flex;
+	gap: 3em;
+	width: 65%;
+	padding: 1em;
+	background-color: var(--light-green);
+	border-radius: 0px 0px 20px 0px;
+}
+
+h1 {
+	color: var(--white);
+	font-family: "Roboto Slab", serif;
+	font-size: 3.5em;
+	margin: 0;
+	padding: 0;
+	letter-spacing: 5px;
+}
+
+.top-right {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
+
+.bot-left {
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	transform: rotate(180deg);
+}
+
+.leaves {
+	width: 80px;
+	height: 80px;
+}
+
+main {
+	display: flex;
+	gap: 30px;
+	justify-content: center;
+	align-items: center;
+	margin: 2rem;
+	height: 70%;
+}
+
+.visual-container {
+	display: relative;
+	width: 50%;
+	height: 80%;
+	background-color: var(--white);
+	border-radius: 20px;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	padding: 1rem;
+}
