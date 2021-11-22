@@ -10,6 +10,7 @@
 			href="Assets/Global Watch.ico"
 		/>
 		<link rel="stylesheet" href="style.css" />
+		<script src="/visualizations.js"></script>
 		<title>Global Watch</title>
 	</head>
 	<body>
@@ -25,8 +26,33 @@
 			/>
 		</header>
 		<main>
-			<div class="visual-container"></div>
-			<div class="visual-container"></div>
+			<div class="visual-container">
+				<nav>
+					<a href="#" onclick="displayGraph(1)">
+						Proyecciones de Población
+					</a>
+					<a href="#" onclick="displayGraph(2)"> Precipitaciones </a>
+					<a href="#" onclick="displayGraph(3)"> Emisiones CO2 </a>
+					<a href="#" onclick="displayGraph(4)"> Emisiones GHG </a>
+				</nav>
+				<div id="World-Graphs"></div>
+			</div>
+			<div class="visual-container">
+				<nav>
+					<a href="#" onclick="displayGraph(5)"> Hemisferio Norte </a>
+					<a href="#" onclick="displayGraph(6)"> Hemisferio Sur </a>
+					<a href="#" onclick="displayGraph(7)"> Global </a>
+				</nav>
+				<div id="Bar-Graphs"></div>
+			</div>
+			<div class="visual-container">
+				<nav>
+					<a href="#" onclick="displayGraph(5)"> Hemisferio Norte </a>
+					<a href="#" onclick="displayGraph(6)"> Hemisferio Sur </a>
+					<a href="#" onclick="displayGraph(7)"> Global </a>
+				</nav>
+				<div id="Bar-Graphs"></div>
+			</div>
 		</main>
 	</body>
 </html>
