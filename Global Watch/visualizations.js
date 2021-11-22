@@ -19,12 +19,16 @@ function displayGraph(graphType) {
 		}
 	} else {
 		switch (graphType) {
-			case 1:
+			case 5:
 				console.log(5);
 				break;
 
-			case 2:
+			case 6:
 				console.log(6);
+				break;
+
+			case 7:
+				console.log(7);
 				break;
 		}
 	}
