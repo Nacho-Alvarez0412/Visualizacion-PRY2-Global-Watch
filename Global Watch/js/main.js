@@ -45,22 +45,64 @@ async function fetchDataFromExcelFile(datasetName) {
 
 async function onTemperatureAnomalyClick(event) {
     event.preventDefault();
-
     const climateChangeData = await fetchDataFromExcelFile(
         FILE_NAMES.climateChanges
     );
-
     const { selectorName } = event.target.dataset;
     switch (selectorName) {
-        case "global":
-            console.log("its global");
+        case "global": {
+            const globalClimateChanges = climateChangeData.filter(
+                (climateChange) => climateChange["Code"] === "OWID_WRL"
+            );
+            const climateChangesPerYear =
+                getClimateChangesPeryYear(globalClimateChanges);
+            createTemperatureAnomaliesChart(
+                {
+                    title: "Anomalías de temperatura globales por año",
+                    yAxisTitle: "Temperatura",
+                    seriesName: "Anomalías de temperatura",
+                },
+                climateChangesPerYear
+            );
             break;
-        case "north":
-            console.log("its north");
+        }
+        case "north": {
+            const northernClimateChanges = climateChangeData.filter(
+                (climateChange) =>
+                    climateChange["Entity"] === "Northern Hemisphere"
+            );
+            const climateChangesPerYear = getClimateChangesPeryYear(
+                northernClimateChanges
+            );
+            createTemperatureAnomaliesChart(
+                {
+                    title: "Anomalías de temperatura del hemisferio norte por año",
+                    yAxisTitle: "Temperatura",
+                    seriesName: "Anomalías de temperatura",
+                },
+                climateChangesPerYear
+            );
             break;
-        case "south":
-            console.log("its south");
+        }
+        case "south": {
+            const southernClimateChanges = climateChangeData.filter(
+                (climateChange) =>
+                    climateChange["Entity"] === "Southern Hemisphere"
+            );
+            const climateChangesPerYear = getClimateChangesPeryYear(
+                southernClimateChanges
+            );
+            createTemperatureAnomaliesChart(
+                {
+                    title: "Anomalías de temperatura del hemisferio sur por año",
+                    yAxisTitle: "Temperatura",
+                    seriesName: "Anomalías de temperatura",
+                },
+                climateChangesPerYear
+            );
             break;
+        }
+
         default:
             return;
     }
@@ -72,7 +114,6 @@ async function windowIsLoaded() {
     const climateChangeData = await fetchDataFromExcelFile(
         FILE_NAMES.climateChanges
     );
-    console.log(climateChangeData);
     const globalClimateChanges = climateChangeData.filter(
         (climateChange) => climateChange["Code"] === "OWID_WRL"
     );
