@@ -25,3 +25,16 @@ function getUniqueYears(dataset) {
     );
     return uniqueYears;
 }
+
+/**
+ * Gets the bigegst value in a dataset
+ * @param {Array} dataset An array of objects with a value atribute
+ * @returns The biggest value in the dataset
+ */
+function getBiggestValue(dataset) {
+    let biggestValue = 0;
+    dataset.forEach((entry) => {
+        if (entry.value > biggestValue) biggestValue = entry.value;
+    });
+    return biggestValue;
+}

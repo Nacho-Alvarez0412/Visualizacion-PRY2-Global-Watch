@@ -13,7 +13,8 @@
 
         <script src="./vendor/js/xlsx.min.js"></script>
         <script src="./vendor/js/highmaps.js"></script>
-
+        <script src="https://code.highcharts.com/maps/modules/data.js"></script>
+        <script src="https://code.highcharts.com/mapdata/custom/world.js"></script>
         <script src="./js/utils.js"></script>
         <script src="./js/filters.js"></script>
         <script src="./js/charts.js"></script>
@@ -42,6 +43,8 @@
                     <a href="#" onclick="displayGraph(3)"> Emisiones CO2 </a>
                     <a href="#" onclick="displayGraph(4)"> Emisiones GHG </a>
                 </nav>
+                <div id="global-map-container"></div>
+                <select name="year" id="year"></select>
             </div>
             <div class="visual-container"></div>
             <div class="visual-container general">

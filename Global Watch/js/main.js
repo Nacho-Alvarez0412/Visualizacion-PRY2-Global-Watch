@@ -140,7 +140,19 @@ async function windowIsLoaded() {
         FILE_NAMES.futurePopulationProjections
     );
     const uniqueYears = getUniqueYears(poblationData);
-    console.log(uniqueYears);
+    let currentYearPopulationProjection = [];
+    poblationData.forEach(
+        (entry) =>
+            entry["Year"] === uniqueYears[0] &&
+            currentYearPopulationProjection.push({
+                country: entry["Code"],
+                value: entry["Population Estimates"],
+            })
+    );
+    createWorldChoroplethMap(currentYearPopulationProjection, {
+        title: "Proyección de la futura población por país",
+        seriesName: "Cantidad de personas",
+    });
 }
 
 window.addEventListener("load", windowIsLoaded);

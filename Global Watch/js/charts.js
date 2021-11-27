@@ -31,7 +31,6 @@ function createTemperatureAnomaliesChart(chartOptions, chartData) {
                     pointStart: parseInt(chartData[0].year),
                 },
             },
-
             series: [
                 {
                     name: seriesName,
@@ -40,7 +39,6 @@ function createTemperatureAnomaliesChart(chartOptions, chartData) {
                     ),
                 },
             ],
-
             responsive: {
                 rules: [
                     {
@@ -60,4 +58,45 @@ function createTemperatureAnomaliesChart(chartOptions, chartData) {
         }
     );
     return temperatureAnomalyChart;
+}
+
+/**
+ * Creates a world choropleth map with a given dataset
+ * @param {Array} dataset The dataset used to display in the map
+ * @param {Object} mapOptions The options of the map
+ */
+function createWorldChoroplethMap(dataset, mapOptions) {
+    const { title, seriesName } = mapOptions;
+
+    Highcharts.mapChart("global-map-container", {
+        title: {
+            text: title,
+        },
+        mapNavigation: {
+            enabled: true,
+            buttonOptions: {
+                verticalAlign: "bottom",
+            },
+        },
+        colorAxis: {
+            min: 1,
+            max: getBiggestValue(dataset),
+            type: "logarithmic",
+        },
+        series: [
+            {
+                data: dataset,
+                mapData: Highcharts.maps["custom/world"],
+                joinBy: ["iso-a3", "country"],
+                name: seriesName,
+                borderColor: "black",
+                borderWidth: 0.2,
+                states: {
+                    hover: {
+                        borderWidth: 1,
+                    },
+                },
+            },
+        ],
+    });
 }
