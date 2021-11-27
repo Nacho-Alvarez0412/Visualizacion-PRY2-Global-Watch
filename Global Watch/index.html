@@ -46,9 +46,27 @@
             <div class="visual-container"></div>
             <div class="visual-container general">
                 <nav>
-                    <a href="#" onclick="displayGraph(5)"> Hemisferio Norte </a>
-                    <a href="#" onclick="displayGraph(6)"> Hemisferio Sur </a>
-                    <a href="#" onclick="displayGraph(7)"> Global </a>
+                    <a
+                        href="#"
+                        class="temperature-anomaly-selector"
+                        data-selector-name="north"
+                    >
+                        Hemisferio Norte
+                    </a>
+                    <a
+                        href="#"
+                        class="temperature-anomaly-selector"
+                        data-selector-name="south"
+                    >
+                        Hemisferio Sur
+                    </a>
+                    <a
+                        href="#"
+                        class="temperature-anomaly-selector"
+                        data-selector-name="global"
+                    >
+                        Global
+                    </a>
                 </nav>
                 <div id="temperature-anomaly-container"></div>
             </div>
