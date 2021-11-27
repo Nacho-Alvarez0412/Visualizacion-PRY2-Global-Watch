@@ -135,6 +135,12 @@ async function windowIsLoaded() {
         },
         climateChangesPerYear
     );
+    // Get initial data for global map
+    const poblationData = await fetchDataFromExcelFile(
+        FILE_NAMES.futurePopulationProjections
+    );
+    const uniqueYears = getUniqueYears(poblationData);
+    console.log(uniqueYears);
 }
 
 window.addEventListener("load", windowIsLoaded);
