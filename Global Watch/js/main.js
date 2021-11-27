@@ -43,6 +43,11 @@ async function fetchDataFromExcelFile(datasetName) {
     }
 }
 
+/**
+ * Event handler when temperature anomaly region is selected
+ * @param {Event} event The event that is triggered when a region is selected
+ * @returns void
+ */
 async function onTemperatureAnomalyClick(event) {
     event.preventDefault();
     const climateChangeData = await fetchDataFromExcelFile(
@@ -102,12 +107,14 @@ async function onTemperatureAnomalyClick(event) {
             );
             break;
         }
-
         default:
             return;
     }
 }
 
+/**
+ * Initializes data and sets initial charts
+ */
 async function windowIsLoaded() {
     loadEventListeners();
     // Get initial data for temperature anomaly line chart
