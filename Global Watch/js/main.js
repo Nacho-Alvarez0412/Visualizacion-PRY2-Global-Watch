@@ -112,6 +112,18 @@ async function onTemperatureAnomalyClick(event) {
     }
 }
 
+function updateYearDropdown(yearsArr) {
+    // Clear current years
+    document.getElementById("year-dropdown").innerHTML = "";
+    // Add new years
+    yearsArr.forEach((year) => {
+        const newOptionElement = document.createElement("option");
+        newOptionElement.innerText = year;
+        newOptionElement.attributes.value = year;
+        document.getElementById("year-dropdown").appendChild(newOptionElement);
+    });
+}
+
 /**
  * Initializes data and sets initial charts
  */
@@ -139,7 +151,10 @@ async function windowIsLoaded() {
     const poblationData = await fetchDataFromExcelFile(
         FILE_NAMES.futurePopulationProjections
     );
+    // Get unique years for initial dropdown
     const uniqueYears = getUniqueYears(poblationData);
+    updateYearDropdown(uniqueYears);
+    // Get population from the initial year
     let currentYearPopulationProjection = [];
     poblationData.forEach(
         (entry) =>
