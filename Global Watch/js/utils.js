@@ -38,3 +38,11 @@ function getBiggestValue(dataset) {
     });
     return biggestValue;
 }
+
+function getCurrentMapSelector() {
+    const mapSelectors = Array.from(document.querySelectorAll(".map-selector"));
+    for (let mapSelector of mapSelectors) {
+        if (mapSelector.dataset.selected === "true")
+            return mapSelector.dataset.selector;
+    }
+}

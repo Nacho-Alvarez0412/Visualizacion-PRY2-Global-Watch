@@ -11,6 +11,16 @@ const FILE_NAMES = {
  * Loads the event listeners for the page
  */
 function loadEventListeners() {
+    const choroplethMapSelectors = Array.from(
+        document.querySelectorAll(".map-selector")
+    );
+    choroplethMapSelectors.map((selector) => {
+        selector.addEventListener("click", onMapSelectorClick);
+    });
+    // Event listener for year dropdown
+    document
+        .getElementById("year-dropdown")
+        .addEventListener("change", onYearDropdownChange);
     // Add event listener to temperature anomaly selectors
     const temperatureAnomalySelectors = Array.from(
         document.querySelectorAll(".temperature-anomaly-selector")
@@ -18,10 +28,6 @@ function loadEventListeners() {
     temperatureAnomalySelectors.map((selector) => {
         selector.addEventListener("click", onTemperatureAnomalyClick);
     });
-    // Event listener for year dropdown
-    document
-        .getElementById("year-dropdown")
-        .addEventListener("change", onYearDropdownChange);
 }
 
 /**
@@ -116,29 +122,147 @@ async function onTemperatureAnomalyClick(event) {
     }
 }
 
+async function onMapSelectorClick(event) {
+    event.preventDefault();
+    // Set all selectors to false
+    const mapSelectors = Array.from(document.querySelectorAll(".map-selector"));
+    mapSelectors.forEach((selector) => {
+        selector.dataset.selected = "false";
+    });
+    // Set current selector to selected
+    event.target.dataset.selected = "true";
+    // Update map data and dropdown
+    const { selector } = event.target.dataset;
+    console.log(selector);
+    switch (selector) {
+        case "population": {
+            // Get initial data for global map
+            const poblationData = await fetchDataFromExcelFile(
+                FILE_NAMES.futurePopulationProjections
+            );
+            // Get unique years for initial dropdown
+            const uniqueYears = getUniqueYears(poblationData);
+            updateYearDropdown(uniqueYears);
+            // Get population from the initial year
+            let currentYearPopulationProjection = [];
+            poblationData.forEach(
+                (entry) =>
+                    entry["Year"] === uniqueYears[0] &&
+                    currentYearPopulationProjection.push({
+                        country: entry["Code"],
+                        value: entry["Population Estimates"],
+                    })
+            );
+            createWorldChoroplethMap(currentYearPopulationProjection, {
+                title: "Proyección de la futura población por país",
+                seriesName: "Cantidad de personas",
+            });
+            break;
+        }
+        case "precipitations": {
+            // Get initial data for global map
+            const precipiationData = await fetchDataFromExcelFile(
+                FILE_NAMES.averageMonthlyPrecipitations
+            );
+            // Get unique years for initial dropdown
+            const uniqueYears = getUniqueYears(precipiationData);
+            updateYearDropdown(uniqueYears);
+            // Get population from the initial year
+            let currentYearPrecipitations = [];
+            precipiationData.forEach(
+                (entry) =>
+                    entry["Year"] === uniqueYears[0] &&
+                    currentYearPrecipitations.push({
+                        country: entry["Code"],
+                        value: entry["Average monthly precipitation"],
+                    })
+            );
+            createWorldChoroplethMap(currentYearPrecipitations, {
+                title: "Promedio de precipitaciones mensuales por pais",
+                seriesName: "Número de precipitaciones promedio por mes",
+            });
+            break;
+        }
+        case "co2": {
+            break;
+        }
+        case "ghg": {
+            break;
+        }
+        default:
+            break;
+    }
+}
+
 /**
  * Updates the choropleth map with the data from the year
  * @param {Event} event Event object triggered when dropdown changes
  */
 async function onYearDropdownChange(event) {
-    const currentYear = parseInt(event.target.value);
-    const poblationData = await fetchDataFromExcelFile(
-        FILE_NAMES.futurePopulationProjections
-    );
+    const selector = getCurrentMapSelector();
+
+    let datasetName, datasetValueName;
+    switch (selector) {
+        case "population": {
+            datasetName = FILE_NAMES.futurePopulationProjections;
+            datasetValueName = "Population Estimates";
+            break;
+        }
+        case "precipitations": {
+            datasetName = FILE_NAMES.averageMonthlyPrecipitations;
+            datasetValueName = "Average monthly precipitation";
+            break;
+        }
+        case "co2": {
+            datasetName = FILE_NAMES.coEmissions;
+            datasetValueName = "Annual CO2 emissions (per capita)";
+            break;
+        }
+        case "ghg": {
+            datasetName = FILE_NAMES.totalGHGEmissions;
+            datasetValueName = "Total GHG emissions excluding LUCF (CAIT)";
+            break;
+        }
+        default:
+            break;
+    }
+    const dataset = await fetchDataFromExcelFile(datasetName);
     // Get data from the year
-    let currentYearPopulationProjection = [];
-    poblationData.forEach(
+    const currentYear = parseInt(event.target.value);
+    let currentYearData = [];
+    dataset.forEach(
         (entry) =>
             entry["Year"] === currentYear &&
-            currentYearPopulationProjection.push({
+            currentYearData.push({
                 country: entry["Code"],
-                value: entry["Population Estimates"],
+                value: entry[datasetValueName],
             })
     );
-    createWorldChoroplethMap(currentYearPopulationProjection, {
-        title: "Proyección de la futura población por país",
-        seriesName: "Cantidad de personas",
-    });
+    // Create choropleth map
+    switch (selector) {
+        case "population": {
+            createWorldChoroplethMap(currentYearData, {
+                title: "Proyección de la futura población por país",
+                seriesName: "Cantidad de personas",
+            });
+            break;
+        }
+        case "precipitations": {
+            createWorldChoroplethMap(currentYearData, {
+                title: "Promedio de precipitaciones mensuales por pais",
+                seriesName: "Número de precipitaciones promedio por mes",
+            });
+            break;
+        }
+        case "co2": {
+            break;
+        }
+        case "ghg": {
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 /**

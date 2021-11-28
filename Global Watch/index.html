@@ -18,7 +18,6 @@
         <script src="./js/utils.js"></script>
         <script src="./js/filters.js"></script>
         <script src="./js/charts.js"></script>
-        <script src="./js/visualizations.js"></script>
         <script src="./js/main.js"></script>
         <title>Global Watch</title>
     </head>
@@ -36,12 +35,38 @@
         <main>
             <div class="visual-container">
                 <nav>
-                    <a href="#" onclick="displayGraph(1)">
+                    <a
+                        class="map-selector"
+                        data-selector="population"
+                        data-selected="true"
+                        href="#"
+                    >
                         Proyecciones de Población
                     </a>
-                    <a href="#" onclick="displayGraph(2)"> Precipitaciones </a>
-                    <a href="#" onclick="displayGraph(3)"> Emisiones CO2 </a>
-                    <a href="#" onclick="displayGraph(4)"> Emisiones GHG </a>
+                    <a
+                        class="map-selector"
+                        data-selector="precipitations"
+                        data-selected="false"
+                        href="#"
+                    >
+                        Precipitaciones
+                    </a>
+                    <a
+                        class="map-selector"
+                        data-selector="co2"
+                        data-selected="false"
+                        href="#"
+                    >
+                        Emisiones CO2
+                    </a>
+                    <a
+                        class="map-selector"
+                        data-selector="ghg"
+                        data-selected="false"
+                        href="#"
+                    >
+                        Emisiones GHG
+                    </a>
                 </nav>
                 <div id="global-map-container"></div>
                 <select name="year" id="year-dropdown"></select>
