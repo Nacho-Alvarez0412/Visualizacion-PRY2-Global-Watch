@@ -39,6 +39,10 @@ function getBiggestValue(dataset) {
     return biggestValue;
 }
 
+/**
+ * Gets the current selected map type
+ * @returns The name of the current map selected
+ */
 function getCurrentMapSelector() {
     const mapSelectors = Array.from(document.querySelectorAll(".map-selector"));
     for (let mapSelector of mapSelectors) {

@@ -60,23 +60,54 @@ function createTemperatureAnomaliesChart(chartOptions, chartData) {
     return temperatureAnomalyChart;
 }
 
+/**
+ * Displays the country data in a line chart
+ * @param {Event} event Event object
+ */
 async function displayCountryData(event) {
-    console.log(event);
-    // TODO: Fix the fetching to be dynamic
-    const poblationData = await fetchDataFromExcelFile(
-        "FuturePopulationProjections"
-    );
-    const countryData = poblationData.filter(
+    const fileNames = {
+        precipitations: {
+            fileName: "AverageMonthlyPrecipitations",
+            title: `Precipitaciones promedio mensuales de ${event.point.name}`,
+            yAxisTitle: "Precipitaciones mensuales",
+            seriesName: "Cantidad de precipitaciones promedio al año",
+            valueName: "Average monthly precipitation",
+        },
+        co2: {
+            fileName: "COEmissions",
+            title: `Emisiones de CO2 por año de ${event.point.name} per cápita`,
+            yAxisTitle: "Emisiones de CO2 anuales per capita",
+            seriesName: "Emisiones de CO2",
+            valueName: "Annual CO2 emissions (per capita)",
+        },
+        population: {
+            fileName: "FuturePopulationProjections",
+            title: `Proyección de población futura por año de ${event.point.name}`,
+            yAxisTitle: "Cantidad de personas",
+            seriesName: "Cantidad de personas por año",
+            valueName: "Population Estimates",
+        },
+        ghg: {
+            fileName: "TotalGHGEmissions",
+            title: `Total de gases de efecto invernadero por año de ${event.point.name}`,
+            yAxisTitle: "Cantidad de emisiones",
+            seriesName: "Cantidad de emisiones por año",
+            valueName: "Total GHG emissions excluding LUCF (CAIT)",
+        },
+    };
+    const selector = getCurrentMapSelector();
+    const dataset = await fetchDataFromExcelFile(fileNames[selector].fileName);
+    const countryData = dataset.filter(
         (entry) => entry["Code"] === event.point["iso-a3"]
     );
     const xAxisData = countryData.map((entry) => entry["Year"].toString());
     Highcharts.chart("country-data-container", {
         title: {
-            text: `Proyección de población futura por año de ${event.point.name}`,
+            text: fileNames[selector].title,
         },
         yAxis: {
             title: {
-                text: "Cantidad de personas",
+                text: fileNames[selector].yAxisTitle,
             },
         },
         xAxis: [
@@ -99,8 +130,10 @@ async function displayCountryData(event) {
         },
         series: [
             {
-                name: "Cantidad de personas por año",
-                data: countryData.map((entry) => entry["Population Estimates"]),
+                name: fileNames[selector].seriesName,
+                data: countryData.map(
+                    (entry) => entry[fileNames[selector].valueName]
+                ),
             },
         ],
         responsive: {

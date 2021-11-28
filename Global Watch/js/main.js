@@ -122,6 +122,10 @@ async function onTemperatureAnomalyClick(event) {
     }
 }
 
+/**
+ * Updates the map data
+ * @param {Event} event Click event object
+ */
 async function onMapSelectorClick(event) {
     event.preventDefault();
     // Set all selectors to false
@@ -133,7 +137,6 @@ async function onMapSelectorClick(event) {
     event.target.dataset.selected = "true";
     // Update map data and dropdown
     const { selector } = event.target.dataset;
-    console.log(selector);
     switch (selector) {
         case "population": {
             // Get initial data for global map
@@ -184,9 +187,53 @@ async function onMapSelectorClick(event) {
             break;
         }
         case "co2": {
+            // Get initial data for global map
+            const co2Data = await fetchDataFromExcelFile(
+                FILE_NAMES.coEmissions
+            );
+            // Get unique years for initial dropdown
+            const uniqueYears = getUniqueYears(co2Data);
+            updateYearDropdown(uniqueYears);
+            // Get population from the initial year
+            let currentYearCO2Emissions = [];
+            co2Data.forEach(
+                (entry) =>
+                    entry["Year"] === uniqueYears[0] &&
+                    currentYearCO2Emissions.push({
+                        country: entry["Code"],
+                        value: entry["Annual CO2 emissions (per capita)"],
+                    })
+            );
+            createWorldChoroplethMap(currentYearCO2Emissions, {
+                title: "Emisiones de CO2 per capita por país",
+                seriesName: "Emisiones de CO2 per capita",
+            });
             break;
         }
         case "ghg": {
+            // Get initial data for global map
+            const ghgData = await fetchDataFromExcelFile(
+                FILE_NAMES.totalGHGEmissions
+            );
+            // Get unique years for initial dropdown
+            const uniqueYears = getUniqueYears(ghgData);
+            updateYearDropdown(uniqueYears);
+            // Get population from the initial year
+            let currentYearGHGEmissions = [];
+            ghgData.forEach(
+                (entry) =>
+                    entry["Year"] === uniqueYears[0] &&
+                    currentYearGHGEmissions.push({
+                        country: entry["Code"],
+                        value: entry[
+                            "Total GHG emissions excluding LUCF (CAIT)"
+                        ],
+                    })
+            );
+            createWorldChoroplethMap(currentYearGHGEmissions, {
+                title: "Total de emisiones de gases de efecto invernadero por país",
+                seriesName: "Total de emisiones",
+            });
             break;
         }
         default:
@@ -255,9 +302,17 @@ async function onYearDropdownChange(event) {
             break;
         }
         case "co2": {
+            createWorldChoroplethMap(currentYearData, {
+                title: "Emisiones de CO2 per capita por país",
+                seriesName: "Emisiones de CO2 per capita",
+            });
             break;
         }
         case "ghg": {
+            createWorldChoroplethMap(currentYearData, {
+                title: "Total de emisiones de gases de efecto invernadero por país",
+                seriesName: "Total de emisiones",
+            });
             break;
         }
         default:
