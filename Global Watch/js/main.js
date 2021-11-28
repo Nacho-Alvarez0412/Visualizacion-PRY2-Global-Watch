@@ -18,6 +18,10 @@ function loadEventListeners() {
     temperatureAnomalySelectors.map((selector) => {
         selector.addEventListener("click", onTemperatureAnomalyClick);
     });
+    // Event listener for year dropdown
+    document
+        .getElementById("year-dropdown")
+        .addEventListener("change", onYearDropdownChange);
 }
 
 /**
@@ -112,6 +116,35 @@ async function onTemperatureAnomalyClick(event) {
     }
 }
 
+/**
+ * Updates the choropleth map with the data from the year
+ * @param {Event} event Event object triggered when dropdown changes
+ */
+async function onYearDropdownChange(event) {
+    const currentYear = parseInt(event.target.value);
+    const poblationData = await fetchDataFromExcelFile(
+        FILE_NAMES.futurePopulationProjections
+    );
+    // Get data from the year
+    let currentYearPopulationProjection = [];
+    poblationData.forEach(
+        (entry) =>
+            entry["Year"] === currentYear &&
+            currentYearPopulationProjection.push({
+                country: entry["Code"],
+                value: entry["Population Estimates"],
+            })
+    );
+    createWorldChoroplethMap(currentYearPopulationProjection, {
+        title: "Proyección de la futura población por país",
+        seriesName: "Cantidad de personas",
+    });
+}
+
+/**
+ * Updates the year dropdown
+ * @param {Array} yearsArr An array with the new years
+ */
 function updateYearDropdown(yearsArr) {
     // Clear current years
     document.getElementById("year-dropdown").innerHTML = "";

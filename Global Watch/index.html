@@ -34,19 +34,27 @@
             />
         </header>
         <main>
-            <div class="visual-container">
-                <nav>
-                    <a href="#" onclick="displayGraph(1)">
-                        Proyecciones de Población
-                    </a>
-                    <a href="#" onclick="displayGraph(2)"> Precipitaciones </a>
-                    <a href="#" onclick="displayGraph(3)"> Emisiones CO2 </a>
-                    <a href="#" onclick="displayGraph(4)"> Emisiones GHG </a>
-                </nav>
-                <div id="global-map-container"></div>
-                <select name="year" id="year-dropdown"></select>
+            <div class="upper-charts">
+                <div class="visual-container">
+                    <nav>
+                        <a href="#" onclick="displayGraph(1)">
+                            Proyecciones de Población
+                        </a>
+                        <a href="#" onclick="displayGraph(2)">
+                            Precipitaciones
+                        </a>
+                        <a href="#" onclick="displayGraph(3)">
+                            Emisiones CO2
+                        </a>
+                        <a href="#" onclick="displayGraph(4)">
+                            Emisiones GHG
+                        </a>
+                    </nav>
+                    <div id="global-map-container"></div>
+                    <select name="year" id="year-dropdown"></select>
+                </div>
+                <div id="country-data-container" class="visual-container"></div>
             </div>
-            <div class="visual-container"></div>
             <div class="visual-container general">
                 <nav>
                     <a
