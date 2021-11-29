@@ -23,6 +23,7 @@ function getUniqueYears(dataset) {
             !uniqueYears.includes(entry["Year"]) &&
             uniqueYears.push(entry["Year"])
     );
+    uniqueYears.sort((a, b) => a - b);
     return uniqueYears;
 }
 

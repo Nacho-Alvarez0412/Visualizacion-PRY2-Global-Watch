@@ -21,6 +21,10 @@ function loadEventListeners() {
     document
         .getElementById("year-dropdown")
         .addEventListener("change", onYearDropdownChange);
+    // Event listener for play button
+    document
+        .querySelector(".btn-play")
+        .addEventListener("click", onPlayButtonClick);
     // Add event listener to temperature anomaly selectors
     const temperatureAnomalySelectors = Array.from(
         document.querySelectorAll(".temperature-anomaly-selector")
@@ -350,6 +354,110 @@ function updateYearDropdown(yearsArr) {
         newOptionElement.attributes.value = year;
         document.getElementById("year-dropdown").appendChild(newOptionElement);
     });
+}
+
+async function onPlayButtonClick() {
+    const selector = getCurrentMapSelector();
+    let dataset, valueName;
+    switch (selector) {
+        case "population": {
+            dataset = await fetchDataFromExcelFile(
+                FILE_NAMES.futurePopulationProjections
+            );
+            valueName = "Population Estimates";
+            break;
+        }
+        case "precipitations": {
+            dataset = await fetchDataFromExcelFile(
+                FILE_NAMES.averageMonthlyPrecipitations
+            );
+            valueName = "Average monthly precipitation";
+            break;
+        }
+        case "co2": {
+            dataset = await fetchDataFromExcelFile(FILE_NAMES.coEmissions);
+            valueName = "Annual CO2 emissions (per capita)";
+            break;
+        }
+        case "ghg": {
+            dataset = await fetchDataFromExcelFile(
+                FILE_NAMES.totalGHGEmissions
+            );
+            valueName = "Total GHG emissions excluding LUCF (CAIT)";
+            break;
+        }
+        default:
+            break;
+    }
+    const years = getUniqueYears(dataset);
+    let currentYearIdx = 0;
+    let intervalId = null;
+    clearInterval(intervalId);
+    intervalId = setInterval(frame, 10);
+
+    function frame() {
+        if (currentYearIdx === years.length) {
+            clearInterval(intervalId);
+            // Return button to normal state
+            document.querySelector(".btn-play").innerHTML = "";
+            const playIcon = document.createElement("i");
+            playIcon.className = "fas fa-play";
+            document.querySelector(".btn-play").appendChild(playIcon);
+            return;
+        }
+        let currentYearData = [];
+        dataset.forEach(
+            (entry) =>
+                entry["Year"] === years[currentYearIdx] &&
+                currentYearData.push({
+                    country: entry["Code"],
+                    value: entry[valueName],
+                })
+        );
+        // Create choropleth map
+        switch (selector) {
+            case "population": {
+                createWorldChoroplethMap(currentYearData, {
+                    title: "Proyección de la futura población por país",
+                    seriesName: "Cantidad de personas",
+                    minColor: "#86CC66",
+                    maxColor: "#416633",
+                });
+                break;
+            }
+            case "precipitations": {
+                createWorldChoroplethMap(currentYearData, {
+                    title: "Promedio de precipitaciones mensuales por pais",
+                    seriesName: "Número de precipitaciones promedio por mes",
+                    minColor: "#CCCFFF",
+                    maxColor: "#000F36",
+                });
+                break;
+            }
+            case "co2": {
+                createWorldChoroplethMap(currentYearData, {
+                    title: "Emisiones de CO2 per capita por país",
+                    seriesName: "Emisiones de CO2 per capita",
+                    minColor: "#86CC66",
+                    maxColor: "#416633",
+                });
+                break;
+            }
+            case "ghg": {
+                createWorldChoroplethMap(currentYearData, {
+                    title: "Total de emisiones de gases de efecto invernadero por país",
+                    seriesName: "Total de emisiones",
+                    minColor: "#86CC66",
+                    maxColor: "#416633",
+                });
+                break;
+            }
+            default:
+                break;
+        }
+        document.querySelector(".btn-play").innerHTML = years[currentYearIdx];
+        currentYearIdx++;
+    }
 }
 
 /**
