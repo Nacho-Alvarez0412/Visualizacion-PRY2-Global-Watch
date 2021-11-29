@@ -71,7 +71,7 @@ async function displayCountryData(event) {
             fileName: "AverageMonthlyPrecipitations",
             title: `Precipitaciones promedio mensuales de ${event.point.name}`,
             yAxisTitle: "Precipitaciones mensuales",
-            seriesName: "Cantidad de precipitaciones promedio al año",
+            seriesName: "Número de precipitaciones",
             valueName: "Average monthly precipitation",
             color: "#6670FF",
         },
@@ -81,7 +81,7 @@ async function displayCountryData(event) {
             yAxisTitle: "Emisiones de CO2 anuales per capita",
             seriesName: "Emisiones de CO2",
             valueName: "Annual CO2 emissions (per capita)",
-            color: "#416633",
+            color: "#e66800",
         },
         population: {
             fileName: "FuturePopulationProjections",
@@ -89,7 +89,7 @@ async function displayCountryData(event) {
             yAxisTitle: "Cantidad de personas",
             seriesName: "Cantidad de personas por año",
             valueName: "Population Estimates",
-            color: "#416633",
+            color: "#318c41",
         },
         ghg: {
             fileName: "TotalGHGEmissions",
@@ -97,7 +97,7 @@ async function displayCountryData(event) {
             yAxisTitle: "Cantidad de emisiones",
             seriesName: "Cantidad de emisiones por año",
             valueName: "Total GHG emissions excluding LUCF (CAIT)",
-            color: "#416633",
+            color: "#e66800",
         },
     };
     const selector = getCurrentMapSelector();

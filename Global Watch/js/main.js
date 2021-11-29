@@ -163,8 +163,8 @@ async function onMapSelectorClick(event) {
             createWorldChoroplethMap(currentYearPopulationProjection, {
                 title: "Proyección de la futura población por país",
                 seriesName: "Cantidad de personas",
-                minColor: "#86CC66",
-                maxColor: "#416633",
+                minColor: "#e3dd2b",
+                maxColor: "#348c41",
             });
             break;
         }
@@ -215,8 +215,8 @@ async function onMapSelectorClick(event) {
             createWorldChoroplethMap(currentYearCO2Emissions, {
                 title: "Emisiones de CO2 per capita por país",
                 seriesName: "Emisiones de CO2 per capita",
-                minColor: "#86CC66",
-                maxColor: "#416633",
+                minColor: "#47e022",
+                maxColor: "#f51101",
             });
             break;
         }
@@ -243,8 +243,8 @@ async function onMapSelectorClick(event) {
             createWorldChoroplethMap(currentYearGHGEmissions, {
                 title: "Total de emisiones de gases de efecto invernadero por país",
                 seriesName: "Total de emisiones",
-                minColor: "#86CC66",
-                maxColor: "#416633",
+                minColor: "#47e022",
+                maxColor: "#f51101",
             });
             break;
         }
@@ -303,8 +303,8 @@ async function onYearDropdownChange(event) {
             createWorldChoroplethMap(currentYearData, {
                 title: "Proyección de la futura población por país",
                 seriesName: "Cantidad de personas",
-                minColor: "#86CC66",
-                maxColor: "#416633",
+                minColor: "#e3dd2b",
+                maxColor: "#348c41",
             });
             break;
         }
@@ -321,8 +321,8 @@ async function onYearDropdownChange(event) {
             createWorldChoroplethMap(currentYearData, {
                 title: "Emisiones de CO2 per capita por país",
                 seriesName: "Emisiones de CO2 per capita",
-                minColor: "#86CC66",
-                maxColor: "#416633",
+                minColor: "#47e022",
+                maxColor: "#f51101",
             });
             break;
         }
@@ -330,8 +330,8 @@ async function onYearDropdownChange(event) {
             createWorldChoroplethMap(currentYearData, {
                 title: "Total de emisiones de gases de efecto invernadero por país",
                 seriesName: "Total de emisiones",
-                minColor: "#86CC66",
-                maxColor: "#416633",
+                minColor: "#47e022",
+                maxColor: "#f51101",
             });
             break;
         }
@@ -420,8 +420,8 @@ async function onPlayButtonClick() {
                 createWorldChoroplethMap(currentYearData, {
                     title: "Proyección de la futura población por país",
                     seriesName: "Cantidad de personas",
-                    minColor: "#86CC66",
-                    maxColor: "#416633",
+                    minColor: "#e3dd2b",
+                    maxColor: "#348c41",
                 });
                 break;
             }
@@ -438,8 +438,8 @@ async function onPlayButtonClick() {
                 createWorldChoroplethMap(currentYearData, {
                     title: "Emisiones de CO2 per capita por país",
                     seriesName: "Emisiones de CO2 per capita",
-                    minColor: "#86CC66",
-                    maxColor: "#416633",
+                    minColor: "#47e022",
+                    maxColor: "#f51101",
                 });
                 break;
             }
@@ -447,8 +447,8 @@ async function onPlayButtonClick() {
                 createWorldChoroplethMap(currentYearData, {
                     title: "Total de emisiones de gases de efecto invernadero por país",
                     seriesName: "Total de emisiones",
-                    minColor: "#86CC66",
-                    maxColor: "#416633",
+                    minColor: "#47e022",
+                    maxColor: "#f51101",
                 });
                 break;
             }
@@ -503,8 +503,8 @@ async function windowIsLoaded() {
     createWorldChoroplethMap(currentYearPopulationProjection, {
         title: "Proyección de la futura población por país",
         seriesName: "Cantidad de personas",
-        minColor: "#86CC66",
-        maxColor: "#416633",
+        minColor: "#e3dd2b",
+        maxColor: "#348c41",
     });
 }
 
