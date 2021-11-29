@@ -28,6 +28,7 @@ function createTemperatureAnomaliesChart(chartOptions, chartData) {
                     label: {
                         connectorAllowed: false,
                     },
+                    color: "#FF5A00",
                     pointStart: parseInt(chartData[0].year),
                 },
             },
@@ -72,6 +73,7 @@ async function displayCountryData(event) {
             yAxisTitle: "Precipitaciones mensuales",
             seriesName: "Cantidad de precipitaciones promedio al año",
             valueName: "Average monthly precipitation",
+            color: "#6670FF",
         },
         co2: {
             fileName: "COEmissions",
@@ -79,6 +81,7 @@ async function displayCountryData(event) {
             yAxisTitle: "Emisiones de CO2 anuales per capita",
             seriesName: "Emisiones de CO2",
             valueName: "Annual CO2 emissions (per capita)",
+            color: "#416633",
         },
         population: {
             fileName: "FuturePopulationProjections",
@@ -86,6 +89,7 @@ async function displayCountryData(event) {
             yAxisTitle: "Cantidad de personas",
             seriesName: "Cantidad de personas por año",
             valueName: "Population Estimates",
+            color: "#416633",
         },
         ghg: {
             fileName: "TotalGHGEmissions",
@@ -93,6 +97,7 @@ async function displayCountryData(event) {
             yAxisTitle: "Cantidad de emisiones",
             seriesName: "Cantidad de emisiones por año",
             valueName: "Total GHG emissions excluding LUCF (CAIT)",
+            color: "#416633",
         },
     };
     const selector = getCurrentMapSelector();
@@ -126,6 +131,7 @@ async function displayCountryData(event) {
                 label: {
                     connectorAllowed: false,
                 },
+                color: fileNames[selector].color,
             },
         },
         series: [
@@ -161,7 +167,7 @@ async function displayCountryData(event) {
  * @param {Object} mapOptions The options of the map
  */
 function createWorldChoroplethMap(dataset, mapOptions) {
-    const { title, seriesName } = mapOptions;
+    const { title, seriesName, minColor, maxColor } = mapOptions;
 
     Highcharts.mapChart("global-map-container", {
         title: {
@@ -176,11 +182,19 @@ function createWorldChoroplethMap(dataset, mapOptions) {
         colorAxis: {
             min: 1,
             max: getBiggestValue(dataset),
+            // minColor: "#86CC66",
+            // maxColor: "#416633",
+            minColor,
+            maxColor,
             type: "logarithmic",
         },
         series: [
             {
                 data: dataset,
+                dataLabels: {
+                    enabled: true,
+                    format: "{point.name}",
+                },
                 mapData: Highcharts.maps["custom/world"],
                 joinBy: ["iso-a3", "country"],
                 name: seriesName,
