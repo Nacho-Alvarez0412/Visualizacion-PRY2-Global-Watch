@@ -134,3 +134,22 @@ a:hover::before {
     visibility: visible;
     transform: scaleX(1);
 }
+
+.select-group > label {
+    display: block;
+    width: 100%;
+    font-family: "Roboto";
+    margin-bottom: 0.6rem;
+    padding: 0 0.3rem;
+}
+
+.select-group > select {
+    display: block;
+    width: 100%;
+    padding: 0.5rem;
+    font-family: "Roboto";
+    font-size: 17px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f3f3f3;
+}
